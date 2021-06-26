@@ -1,4 +1,5 @@
 import ee
+import math
 import config
 
 
@@ -10,6 +11,18 @@ def initialize():
 
 def get_poi():
     return ee.FeatureCollection(config.PREDICT_MASK).geometry().convexHull()
+
+
+#function to mask renoster pathces
+def remclip(mask):
+    def remclipInner(image):
+        return image.updateMask(mask)
+    return remclipInner
+
+
+#function to remove obs ndvi < 0
+def ndclip(image):
+    return image.updateMask(image.select(['ndvi']).gt(0))
 
 
 #to fill nulls with previous non null record
@@ -131,7 +144,7 @@ def predS2(renoster,mask_renoster):
         #start day
         dat = ee.Date(dlist)
         #end day
-        dat2 = dat.advance(-1*dstep,'day')
+        dat2 = dat.advance(-1*config.DSTEP,'day')
         #string
         dat_str = dat.format()
 

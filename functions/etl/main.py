@@ -1,4 +1,5 @@
 import ee
+import numpy as np
 import config
 import utils
 
@@ -45,7 +46,7 @@ def main(**args):
     #18
 
     #flatten to array bands
-    imageCol = imageCol.map(remclip(mask_predict))
+    imageCol = imageCol.map(utils.remclip(mask_predict))
     imageCol_all = imageCol.toArrayPerBand()
 
     #define bands to export and dim
