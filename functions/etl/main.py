@@ -21,6 +21,7 @@ def main(**args):
     PDate_End = ee.Date(pDateEnd)
     n_day_pred = config.DWINDOW-config.DSTEP
     pdates = ee.List.sequence(0, n_day_pred, config.DSTEP)
+    pdates = pdates.map(lambda n: PDate_Start.advance(n,'day'))
 
     # map to dates and create imagecol from results
     # produces stack of images from yesterday to 6 months ago
@@ -71,3 +72,4 @@ def main(**args):
     # Start the task
     imageTask.start()
     # this whole process can take 6-24 hours
+    return imageTask

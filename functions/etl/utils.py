@@ -38,8 +38,8 @@ def joinS2(area_to_join,start,end):
 
     # Specify an equals filter for image timestamps.
     filterIDEq = ee.Filter.equals(
-    leftField= 'system:index',
-    rightField= 'system:index'
+        leftField= 'system:index',
+        rightField= 'system:index'
     )
 
     #level 1 s2 data

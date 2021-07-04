@@ -12,7 +12,7 @@ EXPORT_FORMAT_OPTIONS = {
     }
 MAX_PIXELS = 200000000
 PDATESTR = datetime.datetime.today().strftime('%Y-%m-%d')
-PREDICT_IMG_BASE = 'Image_reno_predict_'
+PREDICT_IMG_BASE = 'NEW_Image_reno_predict_'
 PREDICT_MASK = 'users/glennwithtwons/remnos'
 SCALE = 10
 
