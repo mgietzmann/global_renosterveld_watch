@@ -1,0 +1,11 @@
+export GOOGLE_APPLICATION_CREDENTIALS=/home/jupyter/global_renosterveld_watch/functions/prep_for_predict/ee-vegetation-gee4geo-0871f1ec72fb.json
+python main.py \
+    --input gs://reno-ee-example/Image_reno_predict__2021-07-04.tfrecord.gz \
+    --output gs://reno-ee-example/TestBeamOutput \
+    --region us-central1 \
+    --runner DataflowRunner \
+    --project ee-vegetation-gee4geo \
+    --temp_location gs://reno-ee-example/tmp/ \
+    --setup_file ./setup.py \
+    --staging_location gs://reno-ee-example/staging \
+    --worker_machine_type e2-standard-4

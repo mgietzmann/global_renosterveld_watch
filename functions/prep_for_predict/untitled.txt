@@ -1,0 +1,1 @@
+python main.py --input gs://reno-ee-example/Image_reno_predict__2021-07-04.tfrecord.gz --output gs://reno-ee-example/TestBeamOutput
