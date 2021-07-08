@@ -3,7 +3,7 @@ import numpy as np
 import config
 import utils
 
-def main(**args):
+def main(*args, **kwargs):
     utils.initialize()
 
     # load area to predict

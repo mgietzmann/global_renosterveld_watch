@@ -148,7 +148,7 @@ BANDS = [
     'B8', 'B8A', 'B9', 'B10', 'B11', 'B12', 
     'ndvi', 'evi', 'ndre', 'ndwi', 'nbr'
 ]
-PATCH_DIMENSIONS_FLAT = [2,64 * 64]
+PATCH_DIMENSIONS_FLAT = [18,64 * 64]
 FEATURES = {
     band: tf.io.FixedLenFeature(PATCH_DIMENSIONS_FLAT, dtype=tf.float32)
     for band in BANDS
@@ -197,18 +197,16 @@ def run():
     options = PipelineOptions(pipeline_args)
     options.view_as(SetupOptions).save_main_session = True
     p = beam.Pipeline(options=options)
-    filtered_keys = ['2021-07-04,590216', '2021-07-04,1180432', '2021-07-04,1770648', '2021-07-04,2360864', '2021-07-04,2951080']
-    fk2 = ['2021-07-04,590216,0', '2021-07-04,590216,1', '2021-07-04,590216,2', '2021-07-04,590216,3', '2021-07-04,590216,4']
 
     data = (
         p
         | 'Read Earth Engine Output' >> KeyedReadFromTFRecord(path_args.input)
         | 'Create Keys from Position Information' >> beam.Map(lambda x: (f'{file_path_key(x[0])},{x[1]}', x[2]))
-        | 'Filter Keys' >> beam.Filter(lambda x: x[0] in filtered_keys)
+        #| 'Filter Keys' >> beam.Filter(lambda x: x[0] in filtered_keys)
         | 'Parse Features' >> beam.Map(pass_key(lambda record: tf.io.parse_single_example(record, FEATURES)))
         | 'Tranpose to Timeline per Pixel' >> beam.Map(pass_key(transpose_per_key))
         | 'Break Into Data per Pixel' >> beam.FlatMap(break_up_patch)
-        | 'Filter Keys 2' >> beam.Filter(lambda x: x[0] in fk2)
+        #| 'Filter Keys 2' >> beam.Filter(lambda x: x[0] in fk2)
         | 'Standardize Data' >> beam.Map(pass_key(standardize))
         | 'Transform Data Dict Into a Timeline of Tuples' \
             >> beam.Map(pass_key(lambda data_dict: tf.transpose(list(data_dict.values()))))
