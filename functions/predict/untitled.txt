@@ -1,0 +1,1 @@
+python main.py --input gs://reno-ee-example/RealBeamOutput-00000-of-02262 --output gs://reno-ee-example/TestBeamPredictOutput/data

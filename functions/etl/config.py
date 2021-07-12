@@ -7,13 +7,13 @@ DWINDOW = 180
 DSTEP = 10
 EXPORT_FORMAT_OPTIONS = {
         'patchDimensions': [64, 64],
-        'maxFileSize': 100000000,
+        'maxFileSize': 1000000000,
         'compressed': True
     }
 MAX_PIXELS = 200000000
 PDATESTR = datetime.datetime.today().strftime('%Y-%m-%d')
-PREDICT_IMG_BASE = 'NEW_Image_reno_predict_'
+PREDICT_IMG_BASE = 'Image_reno_predict_'
 PREDICT_MASK = 'users/glennwithtwons/remnos'
 SCALE = 10
 
-IMAGE_FILE_PREFIX = PREDICT_IMG_BASE + "_" + PDATESTR
+IMAGE_FILE_PREFIX = PREDICT_IMG_BASE + "_" + PDATESTR + "/" + "data"
