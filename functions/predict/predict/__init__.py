@@ -30,7 +30,7 @@ class Predict(beam.DoFn):
             'output_1': [
                 [float(element) for element in array]
                 for array in  prediction['output_1'].numpy()
-            ]
+            ][0]
         }
         return [prediction]
 
