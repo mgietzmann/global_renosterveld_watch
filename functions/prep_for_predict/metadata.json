@@ -1,0 +1,16 @@
+{
+  "name": "Reno Prep for Predict Batch Pipeline v1",
+  "description": "Prep for Predict Batch Pipeline.",
+  "parameters": [
+    {
+      "name": "input",
+      "label": "Input File Pattern",
+      "helpText": "Input File Pattern"
+    },
+    {
+      "name": "output",
+      "label": "Output File Prefix",
+      "helpText": "Output File Prefix"
+    }
+  ]
+}

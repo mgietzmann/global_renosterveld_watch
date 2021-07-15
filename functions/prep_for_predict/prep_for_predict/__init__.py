@@ -15,37 +15,6 @@ from apache_beam.io.tfrecordio import _TFRecordUtil
 
 from apache_beam.io.tfrecordio import _TFRecordSource
 
-"""
-class KeyedTFRecordSource(FileBasedSource):
-    def __init__(self, file_pattern, coder, compression_type, validate):
-        super(KeyedTFRecordSource, self).__init__(
-        # super not allowed https://stackoverflow.com/questions/58410406/gcp-dataflow-with-python-attributeerror-cant-get-attribute-jsonsink-on-mo
-        #FileBasedSource.__init__(self,
-            file_pattern=file_pattern,
-            compression_type=compression_type,
-            splittable=False,
-            validate=validate)
-        
-        self._coder = coder
-
-    def read_records(self, file_name, offset_range_tracker):
-        if offset_range_tracker.start_position():
-            raise ValueError(
-                'Start position not 0:%s' % offset_range_tracker.start_position())
-
-        current_offset = offset_range_tracker.start_position()
-        with self.open_file(file_name) as file_handle:
-            while True:
-                if not offset_range_tracker.try_claim(current_offset):
-                    raise RuntimeError('Unable to claim position: %s' % current_offset)
-                record = _TFRecordUtil.read_record(file_handle)
-                if record is None:
-                    return  # Reached EOF
-                else:
-                    current_offset += _TFRecordUtil.encoded_num_bytes(record)
-                    yield (file_name, current_offset, self._coder.decode(record))
-                    """
-
 
 class KeyedTFRecordSource(_TFRecordSource):
     def __init__(self, file_pattern, coder, compression_type, validate):
@@ -191,10 +160,11 @@ def run():
 
     parser.add_argument('--input', required=True)
     parser.add_argument('--output', required=True)
+    parser.add_argument('--setup_file', required=False, default='./setup.py')
 
     path_args, pipeline_args = parser.parse_known_args()
 
-    options = PipelineOptions(pipeline_args)
+    options = PipelineOptions(pipeline_args, setup_file=path_args.setup_file)
     options.view_as(SetupOptions).save_main_session = True
     p = beam.Pipeline(options=options)
 
