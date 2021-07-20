@@ -20,7 +20,7 @@ ENV FLEX_TEMPLATE_PYTHON_PY_FILE="main.py"
 COPY main.py main.py
 COPY requirements.txt requirements.txt
 COPY setup.py setup.py
-COPY prep_for_predict/__init__.py prep_for_predict/__init__.py
+COPY grw_preprocess/ grw_preprocess/
 
 # We could get rid of installing libffi-dev and git, or we could leave them.
 RUN apt-get update \
@@ -29,6 +29,8 @@ RUN apt-get update \
     # Upgrade pip and install the requirements.
     && pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r $FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE \
+    # install tensorflow here because dataflow will try to install it later
+    # with --no-binary set which doesn't work
     && pip install tensorflow \
     # Download the requirements to speed up launching the Dataflow job.
     && pip download --no-cache-dir --dest /tmp/dataflow-requirements-cache -r $FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE

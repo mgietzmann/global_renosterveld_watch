@@ -11,6 +11,16 @@
       "name": "output",
       "label": "Output File Prefix",
       "helpText": "Output File Prefix"
+    },
+    {
+      "name": "worker_machine_type",
+      "label": "Worker Type",
+      "helpText": "Worker Type"
+    },
+    {
+      "name": "max_num_workers",
+      "label": "Max Number of Workers",
+      "helpText": "Max Number of Workers"
     }
   ]
 }
