@@ -12,7 +12,7 @@ def main(event, context):
         final_number = int(file_name.split('/')[-1].split('-')[-1])
     except:
         return
-    pattern = re.compile(f'(\S+)0*{final_number-1}-0*{final_number}')
+    pattern = re.compile(f'(\S+)0*{final_number-1}-of-0*{final_number}')
     match = re.match(pattern, file_name)
     if match is not None:
         sleep(5) # just let any last files settle
