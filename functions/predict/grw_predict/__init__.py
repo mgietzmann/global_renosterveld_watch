@@ -17,7 +17,6 @@ class Predict(beam.DoFn):
         if self.model is None:
             self.model = tf.keras.models.load_model(KEYED_EXPORT_PATH, compile=False).signatures['serving_default']
         # convert to tensors
-        print(data['key'])
         data = {
             'key': tf.constant(data['key']),
             'input_1': tf.convert_to_tensor([data['input_1']], dtype=tf.float32)
@@ -40,10 +39,11 @@ def run():
 
     parser.add_argument('--input', required=True)
     parser.add_argument('--output', required=True)
+    parser.add_argument('--setup_file', required=False, default='./setup.py')
 
     path_args, pipeline_args = parser.parse_known_args()
 
-    options = PipelineOptions(pipeline_args)
+    options = PipelineOptions(pipeline_args, setup_file=path_args.setup_file)
     options.view_as(SetupOptions).save_main_session = True
     p = beam.Pipeline(options=options)
 

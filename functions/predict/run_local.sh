@@ -1,0 +1,11 @@
+python main.py \
+    --input "$GRW_PREDICT_INPUT" \
+    --output "$GRW_PREDICT_OUTPUT" \
+    --region us-central1 \
+    --runner DataflowRunner \
+    --project "$GRW_PREDICT_PROJECT" \
+    --temp_location "$GRW_PREDICT_TEMP_LOCATION" \
+    --setup_file ./setup.py \
+    --staging_location "$GRW_PREDICT_STAGING_LOCATION" \
+    --worker_machine_type n1-standard-2 \
+    --max_num_workers 50

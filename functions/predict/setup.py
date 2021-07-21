@@ -1,7 +1,6 @@
 from setuptools import setup
 
-setup(name='predict',
-        packages=['predict'],
+setup(name='grw_predict',
+        packages=['grw_predict'],
         include_package_data=True,
-        install_requires=[
-        ])
+        install_requires=[])
