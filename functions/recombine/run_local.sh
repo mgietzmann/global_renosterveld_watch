@@ -1,0 +1,11 @@
+python main.py \
+    --input "$GRW_RECOMBINE_INPUT" \
+    --output "$GRW_PRECOMBINE_OUTPUT" \
+    --region us-central1 \
+    --runner DataflowRunner \
+    --project "$GRW_RECOMBINE_PROJECT" \
+    --temp_location "$GRW_RECOMBINE_TEMP_LOCATION" \
+    --setup_file ./setup.py \
+    --staging_location "$GRW_RECOMBINE_STAGING_LOCATION" \
+    --worker_machine_type n1-standard-2 \
+    --max_num_workers 50

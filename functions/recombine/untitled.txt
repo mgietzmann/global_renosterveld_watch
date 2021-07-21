@@ -1,1 +1,0 @@
-python main.py --input gs://reno-ee-example/TestBeamPredictOutput/data-*-of-00003 --output gs://reno-ee-example/TestBeamRecombine/data
