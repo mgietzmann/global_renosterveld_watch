@@ -1,2 +1,3 @@
 earthengine-api==0.1.250
 numpy
+google-auth

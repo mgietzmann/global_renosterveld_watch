@@ -1,12 +1,12 @@
 import ee
 import math
 import config
+import google.auth
 
 
 def initialize():
-    service_account = 'renosterveld-ee@ee-vegetation-gee4geo.iam.gserviceaccount.com'
-    credentials = ee.ServiceAccountCredentials(service_account, 'ee-vegetation-gee4geo-6309a79ef209.json')
-    ee.Initialize(credentials)
+    credentials, _ = google.auth.default()
+    ee.Initialize(credentials=credentials)
 
 
 def get_poi():
