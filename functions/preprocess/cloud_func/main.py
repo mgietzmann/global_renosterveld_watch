@@ -7,7 +7,7 @@ from time import time
 def main(event, context):
     file_name = event['name']
     print(file_name)
-    pattern = re.compile('gs://grw-ee-download/(\S+)mixer.json')
+    pattern = re.compile('(\S+)mixer.json')
     match = re.match(pattern, file_name)
     if match is not None:
         input_pattern = f'gs://grw-ee-download/{match.groups()[0]}*.tfrecord.gz'
