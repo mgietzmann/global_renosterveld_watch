@@ -12,9 +12,9 @@ def create_example(data):
     patch_data = sorted(patch_data, key=lambda pixel: pixel['key'])
     patch = [[], [], []]
     for pixel_data in patch_data:
-        patch[0].append(tf.argmax(pixel_data['output_1'][0]))
-        patch[1].append(pixel_data['output_1'][0][0])
-        patch[2].append(pixel_data['output_1'][0][1])
+        patch[0].append(tf.argmax(pixel_data['output_1']))
+        patch[1].append(pixel_data['output_1'][0])
+        patch[2].append(pixel_data['output_1'][1])
     example = tf.train.Example(
       features=tf.train.Features(
         feature={
@@ -39,11 +39,11 @@ class MapWriteToTFRecord(beam.DoFn):
         file_data = data[1]
         file_data = sorted(file_data, key=lambda patch_data: patch_data[0])
         options = tf.io.TFRecordOptions(compression_type='GZIP')
-        writer = tf.io.TFRecordWriter(f'{output_dir}/{file_key}.tfrecord.gz', options=options)
+        writer = tf.io.TFRecordWriter(f'{output_dir}{file_key}.tfrecord.gz', options=options)
         for patch_key, patch_example in file_data:
             writer.write(patch_example.SerializeToString())
         writer.close()
-        return [f'{output_dir}/{file_key}']
+        return [f'{output_dir}{file_key}']
 
 
 def run():
@@ -66,10 +66,11 @@ def run():
         | 'Extract Patch Key' >> beam.Map(lambda data: (','.join(data['key'].split(',')[:2]), data))
         | 'Group by Patch Key' >> beam.GroupByKey()
         | 'Create Tensor Flow Examples' >> beam.Map(lambda data: create_example(data))
-        | 'Extract File Key' >> beam.Map(lambda data: (data[0].split(',')[0], data))
+        # .split('/')[3:] >> we get only the file name within the bucket here
+        | 'Extract File Key' >> beam.Map(lambda data: ('/'.join(data[0].split(',')[0].split('/')[3:]), data))
         | 'Group by File Key' >> beam.GroupByKey()
         | 'Map-Write to TFRecord' >> beam.ParDo(MapWriteToTFRecord(), path_args.output)
-        | 'Write File List' >> beam.io.WriteToText(f'{path_args.output}/file_list')
+        | 'Write File List' >> beam.io.WriteToText(f'{path_args.output}file_list')
     )
 
     p.run()
