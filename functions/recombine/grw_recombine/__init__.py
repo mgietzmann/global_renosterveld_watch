@@ -38,8 +38,8 @@ class MapWriteToTFRecord(beam.DoFn):
         file_key = data[0]
         file_data = data[1]
         file_data = sorted(file_data, key=lambda patch_data: patch_data[0])
-        options = tf.io.TFRecordOptions(compression_type='GZIP')
-        writer = tf.io.TFRecordWriter(f'{output_dir}{file_key}.tfrecord.gz', options=options)
+        #options = tf.io.TFRecordOptions(compression_type='GZIP')
+        writer = tf.io.TFRecordWriter(f'{output_dir}{file_key}.tfrecord')#, options=options)
         for patch_key, patch_example in file_data:
             writer.write(patch_example.SerializeToString())
         writer.close()

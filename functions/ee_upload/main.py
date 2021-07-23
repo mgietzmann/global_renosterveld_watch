@@ -53,10 +53,10 @@ def act(data):
                     download_path = blob.name[len(recombine_prefix):]
                     download_dir = '/'.join(download_path.split('/')[:-1]) + '/'
                     break
-            tfrecords_pattern = 'gs://grw-recombine/' + recombine_prefix + download_dir + '*.tfrecord.gz'
+            tfrecords_pattern = 'gs://grw-recombine/' + recombine_prefix + download_dir + '*.tfrecord'
             mixer_path = 'gs://grw-ee-download/' + download_dir + 'mixer.json'
             date = download_dir.split('/')[-2]
-            asset_id = 'projects/ee-exports/assets/Image_reno_predict_' + date
+            asset_id = 'projects/ee-vegetation-gee4geo/assets/Image_reno_predict_' + date
             cmd = f'earthengine --service_account_file ee-vegetation-gee4geo-6309a79ef209.json upload image --asset_id={asset_id} {tfrecords_pattern} {mixer_path}'
             print(cmd)
             output = subprocess.run(cmd, capture_output=True, shell=True)
