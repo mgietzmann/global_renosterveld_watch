@@ -1,6 +1,6 @@
 python main.py \
     --input "$GRW_RECOMBINE_INPUT" \
-    --output "$GRW_PRECOMBINE_OUTPUT" \
+    --output "$GRW_RECOMBINE_OUTPUT" \
     --region us-central1 \
     --runner DataflowRunner \
     --project "$GRW_RECOMBINE_PROJECT" \

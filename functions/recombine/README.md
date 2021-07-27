@@ -9,8 +9,8 @@ Make the build script executable with `chmod +x build.sh` and then run:
 ## Running the Template
 Make the template run script executable with `chmod +x run_template.sh` and then run:
 ```bash
-export GRW_RECOMBINE_INPUT="gs://reno-ee-example/TestBeamPredictOutput/data-*-of-00003"
-export GRW_RECOMBINE_OUTPUT="gs://reno-ee-example/TestBeamRecombine2/"
+export GRW_RECOMBINE_INPUT="gs://grw-predict/1626879681/-00198-of-00610"
+export GRW_RECOMBINE_OUTPUT="gs://grw-recombine/TestBeamRecombine/"
 ./run_template.sh
 ```
 
@@ -29,7 +29,7 @@ Finally run:
 export GRW_RECOMBINE_PROJECT="ee-vegetation-gee4geo"
 export GRW_RECOMBINE_TEMP_LOCATION="gs://reno-ee-example/tmp/"
 export GRW_RECOMBINE_STAGING_LOCATION="gs://reno-ee-example/staging/"
-export GRW_RECOMBINE_INPUT="gs://reno-ee-example/TestBeamPredictOutput/data-*-of-00003"
+export GRW_RECOMBINE_INPUT="gs://grw-predict/1627302676/-00000-of-00609"
 export GRW_RECOMBINE_OUTPUT="gs://reno-ee-example/TestBeamRecombine2/"
 ./run_local.sh
 ```

@@ -33,6 +33,17 @@ def create_example(data):
     return (patch_key, example)
 
 
+def parse_key(data):
+    str_key = data['key']
+    split_key = data['key'].split(',')
+    # need to convert these to integers so sorting works correctly
+    # 101 comes before 11 if sorted alphanumerically which we don't 
+    # want
+    actual_key = (split_key[0], int(split_key[1]), int(split_key[2]))
+    data['key'] = actual_key
+    return data
+
+
 class MapWriteToTFRecord(beam.DoFn):
     def process(self, data, output_dir):
         file_key = data[0]
@@ -63,11 +74,12 @@ def run():
         p
         | 'Read Predictions' >> beam.io.ReadFromText(path_args.input)
         | 'Parse Data' >> beam.Map(lambda line: json.loads(line))
-        | 'Extract Patch Key' >> beam.Map(lambda data: (','.join(data['key'].split(',')[:2]), data))
+        | 'Parse Key' >> beam.Map(lambda data: parse_key(data))
+        | 'Extract Patch Key' >> beam.Map(lambda data: (data['key'][:2], data))
         | 'Group by Patch Key' >> beam.GroupByKey()
         | 'Create Tensor Flow Examples' >> beam.Map(lambda data: create_example(data))
         # .split('/')[3:] >> we get only the file name within the bucket here
-        | 'Extract File Key' >> beam.Map(lambda data: ('/'.join(data[0].split(',')[0].split('/')[3:]), data))
+        | 'Extract File Key' >> beam.Map(lambda data: ('/'.join(data[0][0].split('/')[3:]), data))
         | 'Group by File Key' >> beam.GroupByKey()
         | 'Map-Write to TFRecord' >> beam.ParDo(MapWriteToTFRecord(), path_args.output)
         | 'Write File List' >> beam.io.WriteToText(f'{path_args.output}file_list')

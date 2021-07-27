@@ -49,7 +49,7 @@ def act(data):
             client = storage.Client()
             bucket = client.bucket('grw-recombine')
             for blob in bucket.list_blobs(prefix=recombine_prefix):
-                if blob.name.endswith('tfrecord.gz'):
+                if blob.name.endswith('tfrecord'):
                     download_path = blob.name[len(recombine_prefix):]
                     download_dir = '/'.join(download_path.split('/')[:-1]) + '/'
                     break
