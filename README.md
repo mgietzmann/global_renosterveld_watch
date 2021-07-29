@@ -1,14 +1,14 @@
 # global_renosterveld_watch
 
-## what is it?
+## What Is It?
 This repository contains the code and instructions for building an automation pipeline for the renosterveld monitor found here [`renosterveld-monitor`](https://github.com/GMoncrieff/renosterveld-monitor). 
 
-## how does it work?
+## How Does It Work?
 The `renosterveld-monitor` works by pulling down satellite imagery from Google's [Earth Engine](https://earthengine.google.com/), transforming that data, running the data through a model that predicts areas of renosterveld that have been transformed, and then uploading a new layer to Earth Engine. 
 
 The `global_renosterveld_watch` orchestrates this whole process through cloud services so that this workflow is automatically run on a regular period. 
 
-### architecture
+### Architecture
 The pipeline is shown in the diagram below. It consists of five stages all triggered by the [google cloud scheduler](https://cloud.google.com/scheduler/). 
 
 #### `ee_download`
@@ -35,6 +35,6 @@ The upload then finds the appropriate TFRecords and `mixer.json` file and calls 
 
 ![diagram](drawings/grw_full.png)
 
-## using this repo
+## Using This Repo
 Each of the five stages of the pipeline described above has a corresponding folder in this repository. Within each folder will be instructions on how to setup the stage as well as the code that drives each stage. 
 
