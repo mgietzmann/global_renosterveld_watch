@@ -11,6 +11,8 @@ The `global_renosterveld_watch` orchestrates this whole process through cloud se
 ### Architecture
 The pipeline is shown in the diagram below. It consists of five stages all triggered by the [google cloud scheduler](https://cloud.google.com/scheduler/). 
 
+For context on what we're doing at the beginning and end of the pipeline see this [page](https://developers.google.com/earth-engine/guides/tfrecord) on downloading and uploading TFRecords from and to EarthEngine.
+
 #### `ee_download`
 The download is a [cloud function](https://cloud.google.com/functions/) triggered by the `start_reno_v1` [pub sub topic](https://cloud.google.com/pubsub/). It simply builds an Earth Engine API call that downloads transformed layers of satellite data into the `grw_ee_download` [bucket](https://cloud.google.com/storage/). The layers are downloaded as GZIPed TFRecords. The size of these records are controlled by a `maxFileSize` parameter which allows us to, in turn, control the batch size of the data throughout the pipeline. In addition to the TFRecords, a `mixer.json` file is also downloaded which is used on upload (final stage of the pipeline) to allow the Earth Engine API to reconstitute the spatial relationships in the layers. 
 
