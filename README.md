@@ -42,7 +42,7 @@ Each of the five stages of the pipeline described above has a corresponding fold
 1. *On Demand Compute* By using cloud functions and pub sub topics to handle orchestration, we only use compute when we need it.
 2. *Incredible Scalability* Thanks to the parallelization built into apache beam and Dataflow we can scale out to any size layers we want.
 3. *Easy Testing* Each portion of the pipeline can be tested locally as well as in the cloud.
-4. *Price Configurability* By splitting our pipeline into modules, each section can take advantage of different types of compute. Further we can exactly specify how much and what kind of compute we want to use.
+4. *Price Configurability* By splitting our pipeline into modules, each section can take advantage of different types of compute. Further we can exactly specify how much and what kind of compute we want to use in each stage.
 5. *Future Proof* By using standard GCP services and building our predict stage to mimic GCP's machine learning platform, this pipeline should stay state of the art for years to come. 
 6. *Totally Automatic* New layers will be created on a regular time interval without the need for any intervention. 
 7. *Full Logging* By using standard GCP services we get all of their logging and auditing functionality as well!
