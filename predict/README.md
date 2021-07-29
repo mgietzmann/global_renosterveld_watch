@@ -1,6 +1,4 @@
-# `grw_predict`
-
-# `preprocess`
+# `predict`
 
 ## Components
 This stage consists of nothing more than a *cloud function*, a *bucket*, and a *dataflow template*.
