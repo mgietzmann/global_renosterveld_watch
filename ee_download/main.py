@@ -19,8 +19,7 @@ def main(*args, **kwargs):
     pDateStart = pDateEnd.advance(-1*config.DWINDOW,'day')
     PDate_Start = ee.Date(pDateStart)
     PDate_End = ee.Date(pDateEnd)
-    n_day_pred = config.DWINDOW-config.DSTEP
-    pdates = ee.List.sequence(0, n_day_pred, config.DSTEP)
+    pdates = ee.List.sequence(config.dstep,config.DWINDOW,config.dstep)
     pdates = pdates.map(lambda n: PDate_Start.advance(n,'day'))
 
     # map to dates and create imagecol from results
